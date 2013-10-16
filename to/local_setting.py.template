@@ -1,0 +1,7 @@
+# Django settings for to project.
+
+ADMINS = (
+     ('Your Name', 'youtemail@yourprovider.com'),
+)
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'yoursecretkey'

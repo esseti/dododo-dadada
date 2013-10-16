@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load myfilters %}
+{% load humanize %}
+
+
+{% block container %}
+
+    <div class="table-responsive">
+        <table class="table">
+            {% for task in task_list %}
+                <tr style="opacity:{{ task|trans_task }};">
+                    {% with  task.deadline|mynaturalday|to_tr_class  as color %}
+                        <td>
+                            <button type="button" class="btn btn-{{ color }}" style="width:100%;">
+                                {{ task.title }}
+                            </button>
+
+                        </td>
+                        <td style="width:15px">
+
+                            <button type="button" class="btn btn-{{ color }}" style="width:100%;">
+                                {{ task.deadline | mynaturalday }}
+                            </button>
+                        </td>
+                        <td style="width:15px">
+                            <a href="{% url "list" task.list.title %}">
+                                <button type="button" class="btn btn-default" style="width:100%;">
+                                    {{ task.list.title }}
+                                </button>
+                            </a>
+                        </td>
+
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {#        {% for task in task_list %}#}
+    {##}
+    {#                <div class="btn-group col-xs-12">#}
+    {#                    <button type="button" class="btn btn-default" style="width:5%">#}
+    {#                        <span class="glyphicon glyphicon-unchecked"></span>#}
+    {#                    </button>#}
+    {#                    <button type="button" class="btn btn-default"  style="width:85%">{{ task.title }}</button>#}
+    {#                    <button type="button" class="btn btn-default"  style="width:10%">{{ task.list }}</button>#}
+    {#                </div>#}
+    {##}
+    {#        {% endfor %}#}
+{% endblock %}
+

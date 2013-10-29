@@ -1,0 +1,45 @@
+{% extends 'pomodoro-base.html' %}
+{% load static from staticfiles %}
+
+
+{% block container %}
+    <div class="col-xs-12 center">
+
+        <h1>PAUSE for 5 Mins</h1>
+        <hr>
+        <div id="countdown"></div>
+        <div id="end">
+            <h3>Pomodoro is finished. Time for another pomodoro!</h3>
+                <button type="button" class="btn btn-success">Work on something new</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script_footer %}
+    <script>
+        var exec = false;
+        $("#end").hide();
+        function finished() {
+            $('#end').show();
+            notify("{% static "img/icon.png" %}", "POMODORO", "Pause is over, time to another pomodoro");
+        }
+        ;
+        $(function () {
+            var ts = (new Date()).getTime() + 5  * 1000;
+            $('#countdown').countdown({
+                timestamp: ts,
+                callback: function (minutes, seconds) {
+                    if (minutes == 0 && seconds == 0 && !exec) {
+                        finished();
+                        exec = true;
+                        needToConfirm=false;
+
+                    }
+                }
+            });
+
+        });
+
+    </script>
+{% endblock %}
+

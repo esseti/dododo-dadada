@@ -4,3 +4,10 @@
 local_settings.py
 /to/local_setting.py
 /.idea/
+/css/
+/countdown/
+/admin/
+/js/
+/img/
+/fonts/
+/to/db.sqlite3

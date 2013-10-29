@@ -1,11 +1,11 @@
 # Django settings for to project.
 
+import os
+
 from local_setting import *
 
-import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
 
 MANAGERS = ADMINS
 
@@ -109,8 +109,6 @@ ROOT_URLCONF = 'to.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'to.wsgi.application'
 
-import os
-
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), '..', '../to/do/templates').replace('\\', '/'),)
 
 INSTALLED_APPS = (
@@ -127,6 +125,8 @@ INSTALLED_APPS = (
     'do',
     'crispy_forms',
     'django.contrib.humanize',
+    'social.apps.django_app.default',
+    'pomodoro',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -171,6 +171,11 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
+        },
+        'pomodoro': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
         }
     }
 }
@@ -182,8 +187,23 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     # 'general.context_processors.addProfile',
     # 'general.context_processors.addAppName',
     'django.core.context_processors.request',
-#    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    #    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
+)
+
+AUTHENTICATION_BACKENDS = (
+    # 'social.backends.open_id.OpenIdAuth',
+    # 'social.backends.google.GoogleOpenId',
+    # 'social.backends.google.GoogleOAuth2',
+    # 'social.backends.google.GoogleOAuth',
+    # 'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.FacebookOAuth2',
+    # 'social.backends.yahoo.YahooOpenId',
+    # ...
+    # 'django.contrib.auth.backends.ModelBackend',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']

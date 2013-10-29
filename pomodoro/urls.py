@@ -3,13 +3,14 @@ from django.views.generic.base import TemplateView
 
 __author__ = 'stefanotranquillini'
 from django.conf.urls import patterns, include, url
-from do import views
+from pomodoro import views
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', login_required(views.ToDo.as_view()), name='todo'),
-    url(r'^logout/$',views.logout_view, name='logout'),
-    url(r'^accounts/login/',TemplateView.as_view(template_name="login.html"), name='login'),
-    url(r'^task/(?P<pk>\d+)/done/$', views.Done, name='done'),
+    url(r'^do/(?P<pk>\d+)/$', views.do, name='pomodoro-do'),
+    url(r'^do/(?P<pk>\d+)/finished/$',views.finished, name='pomodoro-finished'),
+
+    url(r'^pause/$',TemplateView.as_view(template_name="pomodoro-pause.html"), name='pomodoro-pause'),
+
 
     # url(r'^$', TemplateView.as_view(template_name="home.html"), name='home'),
     # url(r'^addtask/', views.AddTask, name="create" ),

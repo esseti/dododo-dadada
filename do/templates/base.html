@@ -28,7 +28,7 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="{% static "js/bootstrap.js" %}"></script>
     <script>
         {%block script_head %}
@@ -82,17 +82,27 @@
         <!--/span-->
         <div class="col-xs-12">
             <div class="row">
-                <div class="center">
-                {% if list %}
-                    <a href="{% url "todo" %}">
-                        <h1>@{{ list }}</h1>
-                    </a>
-
-                {% else %}
-                    <h1>@all</h1>
+                {#                <div class="center">#}
+                {#                {% if list %}#}
+                {#                    <a href="{% url "todo" %}">#}
+                {#                        <h1>@{{ list }}</h1>#}
+                {#                    </a>#}
+                {##}
+                {#                {% else %}#}
+                {#                    <h1>@all</h1>#}
+                {#                {% endif %}#}
+                {#                </div>#}
+                {% block form_head %}
+                    {% crispy form %}
+                {% endblock %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h4 class="center">{{ message }}</h4>
+                        </div>
+                    {% endfor %}
                 {% endif %}
-                </div>
-                {% crispy form %}
                 <hr>
                 {% block container %}
 
@@ -107,9 +117,12 @@
     <!--/row-->
     <hr>
     <div id="footer">
-        <small class="muted">
-            Do more
-        </small>
+        {% if user.is_authenticated %}
+            Hi <a href="{% url 'logout' %}">{{ user.username }}</a>, do something amazing today.
+        {% else %}
+            Hello stranger.
+        {% endif %}
+
         <br/>
         <small><a target="_blank" href="http://me.stefanotranquillini.me">contatti</a></small>
 

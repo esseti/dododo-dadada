@@ -5,3 +5,6 @@ ADMINS = (
 )
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'yoursecretkey'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '..'
+SOCIAL_AUTH_FACEBOOK_SECRET = '..'

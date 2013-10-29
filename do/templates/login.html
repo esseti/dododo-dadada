@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{%block form_head %}{% endblock %}
+
+{% block container %}
+    <div class="col-md-12 center">
+            <a href="{% url 'social:begin' "facebook" %}?next={{ request.GET.next }}">Login via Facebook</a>
+    </div>
+{% endblock %}

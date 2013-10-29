@@ -1,0 +1,45 @@
+{% extends 'pomodoro-base.html' %}
+{% load static from staticfiles %}
+
+
+{% block container %}
+    <div class="col-xs-12 center">
+
+        <h1>{{ task.title }}</h1>
+        <hr>
+
+        <div id="countdown"></div>
+
+    </div>
+{% endblock %}
+
+{% block script_footer %}
+    <script>
+        var exec=false;
+
+        function finished() {
+            notify("{% static 'img/icon.png' %}","POMODORO","It's over, time to pause");
+            var url = "{%   url 'pomodoro-finished' task.pk %}";
+            needToConfirm=false;
+            window.location.replace(url);
+        };
+
+        $(function () {
+            $('#end').hide();
+            var ts = (new Date()).getTime() + 25 * 1000;
+            $('#countdown').countdown({
+                timestamp: ts,
+                callback: function (minutes, seconds) {
+                    if (minutes == 0 && seconds == 0 && !exec) {
+                        finished();
+                        exec=true;
+                    }
+                }
+
+            });
+        });
+
+
+    </script>
+{% endblock %}
+

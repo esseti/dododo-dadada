@@ -9,3 +9,5 @@ body{
 .table th, .table td {
      border: none ! important;
  }
+
+.line-through {text-decoration:line-through}

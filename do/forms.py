@@ -11,7 +11,7 @@ class TaskForm(forms.Form):
     def clean_task(self):
         task = self.cleaned_data['task']
         if task.find("#p") == -1:
-            raise forms.ValidationError("Priority not set")
+            raise forms.ValidationError("Priority not set, set max priority #p1 (max) to #p9 (min)")
         # if task.find("@") == -1:
         #     raise forms.ValidationError("List not set")
         return task

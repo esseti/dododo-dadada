@@ -14,4 +14,9 @@ function notify(title, text, url) {
             } else {
                 window.webkitNotifications.requestPermission();
             }
-        }
+        };
+
+function notDoing(){
+    notify("")
+
+}

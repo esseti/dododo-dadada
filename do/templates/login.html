@@ -4,6 +4,6 @@
 
 {% block container %}
     <div class="col-md-12 center">
-            <a href="{% url 'social:begin' "facebook" %}?next={{ request.GET.next }}">Login via Facebook</a>
+            <a href="{% url 'social:begin' "google" %}?next={{ request.GET.next }}">Login via Google</a>
     </div>
 {% endblock %}

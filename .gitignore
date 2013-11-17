@@ -10,4 +10,5 @@ local_settings.py
 /js/
 /img/
 /fonts/
-/to/db.sqlite3
+/to/db.sqlite3  
+/static/

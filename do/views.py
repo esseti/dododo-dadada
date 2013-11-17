@@ -105,33 +105,33 @@ class ToDo(View):
                                   context_instance=RequestContext(request))
 
 
-def post(self, request, *args, **kwargs):
-    user = getUser(request)
-    log.debug("add task")
-    task = request.POST['task']
-    form = TaskForm(request.POST)
-    if form.is_valid():
-        log.debug("ok")
-        error, task_title, priority, days = parserTask(task)
-        log.debug("t: %s p:%s days:%s", task_title, priority, days)
-        list, created = List.objects.get_or_create(owner=user, title="inbox")
-        task = Task(title=task_title, priority=priority, list=list, deadline=datetime.now() + timedelta(days=days))
-        task.save()
-        messages.success(request, "Add task '%s' with priority %s due in %s days " % (task_title, priority, days))
-        log.debug("task added %s", task.deadline)
-        form = TaskForm()
+    def post(self, request, *args, **kwargs):
+        user = getUser(request)
+        log.debug("add task")
+        task = request.POST['task']
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            log.debug("ok")
+            error, task_title, priority, days = parserTask(task)
+            log.debug("t: %s p:%s days:%s", task_title, priority, days)
+            list, created = List.objects.get_or_create(owner=user, title="inbox")
+            task = Task(title=task_title, priority=priority, list=list, deadline=datetime.now() + timedelta(days=days))
+            task.save()
+            messages.success(request, "Add task '%s' with priority %s due in %s days " % (task_title, priority, days))
+            log.debug("task added %s", task.deadline)
+            form = TaskForm()
 
-    task_list = Task.objects.all().filter(list__owner=getUser(request))
-    task_list_done = task_list.filter(done=True)
-    task_list = task_list.filter(done=False)
-    list = None
-    # if "list" in kwargs:
-    #     task_list = task_list.filter(list__title=str(kwargs['list']))
-    #     list = kwargs['list']
+        task_list = Task.objects.all().filter(list__owner=getUser(request))
+        task_list_done = task_list.filter(done=True)
+        task_list = task_list.filter(done=False)
+        list = None
+        # if "list" in kwargs:
+        #     task_list = task_list.filter(list__title=str(kwargs['list']))
+        #     list = kwargs['list']
 
-    task_list = sorted(task_list, key=lambda x: x.weight, reverse=True)
-    return render_to_response('list.html', {'task_list': task_list, 'task_list_done': task_list_done, 'form': form},
-                              context_instance=RequestContext(request))
+        task_list = sorted(task_list, key=lambda x: x.weight, reverse=True)
+        return render_to_response('list.html', {'task_list': task_list, 'task_list_done': task_list_done, 'form': form},
+                                  context_instance=RequestContext(request))
 
 
 

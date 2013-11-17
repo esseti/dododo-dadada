@@ -10,7 +10,7 @@
         <div id="countdown"></div>
         <div id="end">
             <h3>Pomodoro is finished. Time for another pomodoro!</h3>
-                <button type="button" class="btn btn-success">Work on something new</button>
+                <a href="{%  url 'todo' %}"><button type="button" class="btn btn-success">Work on something new</button></a>
         </div>
     </div>
 {% endblock %}
@@ -25,7 +25,7 @@
         }
         ;
         $(function () {
-            var ts = (new Date()).getTime() + 5  * 1000;
+            var ts = (new Date()).getTime() +  5 * 60 * 1000;
             $('#countdown').countdown({
                 timestamp: ts,
                 callback: function (minutes, seconds) {

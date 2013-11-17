@@ -64,6 +64,9 @@
 
 
     <div class="container">
+    <div id="notifications">
+        <h1 class="center"><a target="" href="#" onclick="window.webkitNotifications.requestPermission();">ENABLE NOTIFICATION</a></h1>
+       </div>
         {% block container %}
         {% endblock %}
         <!--/row-->
@@ -73,7 +76,8 @@
     <!--/row-->
     <hr>
     <div id="footer">
-        <small><a target="_blank" href="http://me.stefanotranquillini.me">contatti</a></small>
+        <small><a target="_blank" href="http://me.stefanotranquillini.me">who?</a></small>
+
 
     </div>
 </div>
@@ -81,6 +85,9 @@
 <script src="{% static "countdown/jquery.countdown.js" %}"></script>
 <script src="{% static "js/notifications.js" %}"></script>
 <script>
+    if (window.webkitNotifications.checkPermission() == 0) { // 0 is PERMISSION_ALLOWED
+     $("#notifications").hide();
+    }
     window.onbeforeunload = confirmExit;
     needToConfirm=true;
     function confirmExit() {

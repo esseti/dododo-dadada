@@ -8,3 +8,5 @@ SECRET_KEY = 'yoursecretkey'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '..'
 SOCIAL_AUTH_FACEBOOK_SECRET = '..'
+
+STATIC_ROOT = ''

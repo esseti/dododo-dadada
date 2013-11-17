@@ -124,7 +124,7 @@
         {% endif %}
 
         <br/>
-        <small><a target="_blank" href="http://me.stefanotranquillini.me">contatti</a></small>
+        <small><a target="_blank" href="http://me.stefanotranquillini.me">who?</a></small>
 
     </div>
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -143,6 +143,7 @@
 
 </div>
 
+<script src="{% static "js/notifications.js" %}"></script>
 
 <script>
 
@@ -152,6 +153,9 @@
     $('.easteregg').click(function (event) {
         $('#myModal').modal('show')
     });
+
+    //setInterval(notify("{% static 'img/icon.png' %}","POMODORO","Time for another pomodoro?"),2000);
+setInterval(function(){notify("{% static 'img/icon.png' %}","POMODORO","Time for another pomodoro?")},60*5*1000);
 </script>
 <script src="{% static "js/todo.js" %}"></script>
 {% block script_footer %}

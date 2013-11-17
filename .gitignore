@@ -12,3 +12,4 @@ local_settings.py
 /fonts/
 /to/db.sqlite3  
 /static/
+/to/db.sqlite3

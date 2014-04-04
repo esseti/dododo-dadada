@@ -101,6 +101,9 @@
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4 class="center">{{ message }}</h4>
                         </div>
+                        <script>
+                        window.setTimeout(function() { $(".alert").alert('close'); }, 5000);
+                        </script>
                     {% endfor %}
                 {% endif %}
                 <hr>

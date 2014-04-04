@@ -64,9 +64,9 @@
 
 
     <div class="container">
-    <div id="notifications">
-        <h1 class="center"><a target="" href="#" onclick="window.webkitNotifications.requestPermission();">ENABLE NOTIFICATION</a></h1>
-       </div>
+        <div id="notifications">
+            <h1 class="center"><a id="button" target="" href="#" onclick="">ENABLE NOTIFICATION</a></h1>
+        </div>
         {% block container %}
         {% endblock %}
         <!--/row-->
@@ -86,10 +86,14 @@
 <script src="{% static "js/notifications.js" %}"></script>
 <script>
     if (window.webkitNotifications.checkPermission() == 0) { // 0 is PERMISSION_ALLOWED
-     $("#notifications").hide();
+        $("#notifications").hide();
     }
+    $("#button").click(function () {
+        $("#notifications").hide();
+        window.webkitNotifications.requestPermission();
+    });
     window.onbeforeunload = confirmExit;
-    needToConfirm=true;
+    needToConfirm = true;
     function confirmExit() {
         if (needToConfirm)
             return "Are you sure you wanto to leave?"

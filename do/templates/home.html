@@ -1,18 +1,133 @@
-{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> {{ settings.APP_NAME }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Stefano Tranquillini">
+    <meta name="keywords" content="">
+    <!-- Le styles -->
+    <link rel="icon"
+          type="image/png"
+          href="{% static "img/icon.png" %}">
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <style>
+        .footer {
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+            /* Main marketing message and sign up button */
+        .jumbotron {
+            text-align: center;
+            background-color: transparent;
+        }
+
+        .jumbotron .btn {
+            font-size: 21px;
+            padding: 14px 24px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
 
 
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h1>DODODO!</h1>
 
-{% block container %}
-        <div class="col-md-12 center">
-            <h1>TODO </h1>
+        <p class="lead">The ultimate TODO list.</p>
 
-            <p class="lead">
-                Do things has never been so easy
+        <p><a class="btn btn-lg btn-success" href="{% url 'todo' %}" role="button">Let's do it!</a></p>
+
+    </div>
+
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-lg-4">
+            <h2>Do what matters</h2>
+
+            <p>A smart algorithm sorts the task based on deadlines and priority. You will always have at the top of your
+                list what you have to do.
+
             </p>
 
-            <p>
-                <a class="btn btn-lg btn-success" href="#">Sign up today</a>
-            </p>
-       </div>
-{% endblock %}
+            <p><small>(if you like you can switch to deadline or prioriy sorting)</small></p>
+        </div>
+        <div class="col-lg-4">
+            <h2>Smart Task Creation</h2>
 
+            <p>Forget about multiple things to set. Write everything in the task input (top of the page), we do the rest.</p>
+            <p>Set <b>priority</b> using #p1 (max) to #p9 (min).</p>
+            <p>Set <b>deadline</b> that matters.</p>
+            <table class="table table-condensed">
+                <tr>
+                    <th>Data</th>
+                    <th>Shortcut</th>
+                    <th>Meaning</th>
+                </tr>
+                <tr>
+                    <td>Today</td>
+                    <td>#td</td>
+                    <td>Today</td>
+                </tr>
+                <tr>
+                    <td>Tomorrow</td>
+                    <td>#tm</td>
+                    <td>Tomorrow</td>
+                </tr>
+                <tr>
+                    <td>This week</td>
+                    <td>#tw</td>
+                    <td>Sunday of this week</td>
+                </tr>
+                <tr>
+                    <td>Next week</td>
+                    <td>#nw</td>
+                    <td>Sunday of next week</td>
+                </tr>
+                 <tr>
+                    <td>This month</td>
+                     <td>#tm</td>
+                    <td>last day of the month</td>
+                </tr>
+                <tr>
+                    <td>Next month</td>
+                    <td>#nm</td>
+                    <td>last day of next month</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <h2>Pomodoro</h2>
+
+            <p>Do more with <a target="_blank" href="http://en.wikipedia.org/wiki/Pomodoro_Technique">pomodoro</a> (25min + 5min of pause) and reminders!</p>
+
+
+        </div>
+    </div>
+
+    <!-- Site footer -->
+    <div class="footer">
+        <p>&copy; Company 2013</p>
+    </div>
+
+</div>
+<!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+</body>
+</html>

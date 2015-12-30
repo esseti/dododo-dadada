@@ -121,7 +121,7 @@ INSTALLED_APPS = (
     'do',
     'crispy_forms',
     'django.contrib.humanize',
-    'social.apps.django_app.default',
+    # 'social.apps.django_app.default',
     'pomodoro',
 )
 

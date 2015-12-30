@@ -92,9 +92,7 @@
                 {#                    <h1>@all</h1>#}
                 {#                {% endif %}#}
                 {#                </div>#}
-                {% block form_head %}
-                    {% crispy form %}
-                {% endblock %}
+
                 {% if messages %}
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }} alert-dismissable">

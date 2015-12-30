@@ -4,108 +4,68 @@
 
 
 {% block container %}
-    {% if request.GET.sort %}
-        <div class="col-xs-12 text-center">
-            <a href="{% url "todo" %}" class=" muted">
-                Remove sorting
-            </a>
-            <hr>
-        </div>
-    {% endif %}
     <div class="table-responsive">
-        <table class="table">
+    <table class="table">
 
-            {% for task in task_list %}
-                <tr style="opacity:{{ task|trans_task }};">
-                    {% with  task.deadline_type.0|to_tr_class  as color %}
-                        <td style="width:50px">
-                            <a href="{% url "done" task.pk %}">
-                                <button type="button" class="btn btn-{{ color }}" style="width:100%;">
-                                    <span class="glyphicon glyphicon-unchecked"></span>
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{% url "pomodoro-do" task.pk %}">
-                                <button type="button" class="btn btn-{{ color }}" style="width:100%;">
-                                    {{ task.title }}
-                                </button>
-                            </a>
-
-                        </td>
-                        <td style="width:200px">
-                            <a href="{% url "todo" %}?sort=deadline">
-
-                                <button type="button" class="btn btn-{{ color }}" style="width:100%;">
-                                    {{ task.deadline_type.1 }} (
-                                    <small>{{ task.deadline|naturalday }}</small>
-                                    )
-                                </button>
-                            </a>
-                        </td>
-                        <td style="width:50px">
-                            <a href="{% url "todo" %}?sort=priority">
-
-                                <button type="button" class="btn btn-{{ color }}" style="width:100%;">
-                                    {{ task.priority }}
-                                </button>
-                            </a>
-                        </td>
-                    {% endwith %}
-                </tr>
-            {% endfor %}
-        </table>
-        <hr>
-        <table class="table">
-
-            {% for task in task_list_done %}
-                <tr style="opacity:0.2;">
-                    {% with  "#cccccc"  as color %}
-                        <td style="width:50px;">
-                            <a href="{% url "done" task.pk %}">
-                                <button type="button" class="btn btn-{{ color }}">
-                                    <span class="glyphicon glyphicon-check"></span>
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-{{ color }} line-through" style="width:100%;">
+        {% for task in task_list %}
+            <tr style="opacity:{{ task|trans_task }};">
+                {% with  task.deadline_type.0|to_tr_class  as color %}
+                    <td>
+                        <a href="{% url "pomodoro-do" task.pk %}">
+                            <button type="button" class="btn btn-{{ color }}" style="width:100%;">
                                 {{ task.title }}
                             </button>
+                        </a>
 
-                        </td>
-                        <td style="width:200px">
-                            <a href="{% url "todo" %}?sort=deadline">
-                                <button type="button" class="btn btn-{{ color }}" style="width:100%;">
-                                    <small>{{ task.deadline|naturalday }}</small>
+                    </td>
+                    <td style="width:200px">
+
+                        <button type="button" class="btn btn-{{ color }}" style="width:100%;">
+                            {{ task.deadline_type.1 }} (
+                            <small>{{ task.deadline|naturalday }}</small>
+                            )
+                        </button>
+                        </a>
+                    </td>
+
+                {% endwith %}
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    <div class="table-responsive">
+        {% for list in lists %}
+            <h2>List: {{ list.title }}</h2>
+            <table class="table">
+                {% for task in list.incomplete_tasks %}
+                    <tr>
+                        <td>
+
+
+
+                                {#                            <a href="{% url "pomodoro-do" task.id %}">#}
+                                <button type="button" class="btn btn-{{ color }}"  style="width:100%; max-width: 100%; white-space:normal !important;">
+                                    {{ task.title }}
+
                                 </button>
-                            </a>
+{#                                <button type="button" class="btn btn-{{ color }}">#}
+{#                        </td>#}
+{#                        <td style="width:200px" class="text-center">#}
+{#                            <a href="#">#}
+{#                                <button type="button" class="btn btn-{{ color }}" style="width:100%; ">#}
+{#                                    <small>{{ task.due_date }}</small>#}
+{#                                </button>#}
+{#                            </a>#}
+{#                                    </button>#}
                         </td>
-                        <td style="width:50px">
-                            <a href="{% url "todo" %}?sort=priority">
+                    </tr>
+                {% endfor %}
+            </table>
+            <hr>
+        {% endfor %}
 
-                                <button type="button" class="btn btn-{{ color }}" style="width:100%;">
-                                    {{ task.priority }}
-                                </button>
-                            </a>
-                        </td>
 
-                    {% endwith %}
-                </tr>
-            {% endfor %}
-        </table>
     </div>
-
-    {#        {% for task in task_list %}#}
-    {##}
-    {#                <div class="btn-group col-xs-12">#}
-    {#                    <button type="button" class="btn btn-default" style="width:5%">#}
-    {#                        <span class="glyphicon glyphicon-unchecked"></span>#}
-    {#                    </button>#}
-    {#                    <button type="button" class="btn btn-default"  style="width:85%">{{ task.title }}</button>#}
-    {#                    <button type="button" class="btn btn-default"  style="width:10%">{{ task.list }}</button>#}
-    {#                </div>#}
-    {##}
-    {#        {% endfor %}#}
 {% endblock %}
 

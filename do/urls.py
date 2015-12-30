@@ -6,7 +6,7 @@ from django.conf.urls import patterns, include, url
 from do import views
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', login_required(views.ToDo.as_view()), name='todo'),
+    url(r'^$', views.ToDo.as_view(), name='todo'),
     url(r'^logout/$',views.logout_view, name='logout'),
     url(r'^accounts/login/',TemplateView.as_view(template_name="login.html"), name='login'),
     url(r'^task/(?P<pk>\d+)/done/$', views.Done, name='done'),

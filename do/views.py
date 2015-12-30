@@ -11,11 +11,18 @@ from django.views.generic.base import View
 
 from do.forms import TaskForm
 from do.models import List, Task
+from datetime import datetime
+from wunderpy import Wunderlist
+
 
 
 log = logging.getLogger(__name__)
 
-
+def getWunder(request):
+    w= Wunderlist()
+    w.login("stefano.tranquillini@gmail.com", "ste.tra.wl.17X")
+    w.update_lists()
+    return w
 def getUser(request):
     log.debug("user %s", request.user.username)
     # user, created = User.objects.get_or_create(username="me", password="me")
@@ -79,65 +86,43 @@ def parserTask(task):
 
 
 class ToDo(View):
-    def get(self, request, *args, **kwargs):
-
-        form = TaskForm()
-        task_list = Task.objects.all().filter(list__owner=getUser(request))
-        task_list_done = task_list.filter(done=True)
-        task_list = task_list.filter(done=False)        # list = None
-        # if "list" in kwargs:
-        #     task_list = task_list.filter(list__title=str(kwargs['list']))
-        #     form = TaskForm(initial={'task': ("@%s " % (kwargs['list']))})
-        #     list = kwargs['list']
-        sort = request.GET.get('sort', None)
-        log.debug(sort)
-        log.debug(sort is "priority")
-        log.debug(sort is "deadline")
-
-        if sort == "priority":
-            task_list = sorted(task_list, key=lambda x: x.priority)
-        elif sort == "deadline":
-            task_list = sorted(task_list, key=lambda x: x.priority)
-            task_list = sorted(task_list, key=lambda x: x.deadline)
-        else:
-            task_list = sorted(task_list, key=lambda x: x.weight, reverse=True)
-        return render_to_response('list.html', {'task_list': task_list, 'task_list_done': task_list_done, 'form': form},
-                                  context_instance=RequestContext(request))
-
-
-    def post(self, request, *args, **kwargs):
-        user = getUser(request)
-        log.debug("add task")
-        task = request.POST['task']
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            log.debug("ok")
-            error, task_title, priority, days = parserTask(task)
-            log.debug("t: %s p:%s days:%s", task_title, priority, days)
-            list, created = List.objects.get_or_create(owner=user, title="inbox")
-            task = Task(title=task_title, priority=priority, list=list, deadline=datetime.now() + timedelta(days=days))
-            task.save()
-            messages.success(request, "Add task '%s' with priority %s due in %s days " % (task_title, priority, days))
-            log.debug("task added %s", task.deadline)
-            form = TaskForm()
-
-        task_list = Task.objects.all().filter(list__owner=getUser(request))
-        task_list_done = task_list.filter(done=True)
-        task_list = task_list.filter(done=False)
-        list = None
-        # if "list" in kwargs:
-        #     task_list = task_list.filter(list__title=str(kwargs['list']))
-        #     list = kwargs['list']
-
-        task_list = sorted(task_list, key=lambda x: x.weight, reverse=True)
-        return render_to_response('list.html', {'task_list': task_list, 'task_list_done': task_list_done, 'form': form},
+     def get(self, request, *args, **kwargs):
+        w = getWunder(request)
+        lists = w.lists
+        return render_to_response('list.html', {'lists': lists},
                                   context_instance=RequestContext(request))
 
 
 
+    # def post(self, request, *args, **kwargs):
+    #     user = getUser(request)
+    #     log.debug("add task")
+    #     task = request.POST['task']
+    #     form = TaskForm(request.POST)
+    #     if form.is_valid():
+    #         log.debug("ok")
+    #         error, task_title, priority, days = parserTask(task)
+    #         log.debug("t: %s p:%s days:%s", task_title, priority, days)
+    #         list, created = List.objects.get_or_create(owner=user, title="inbox")
+    #         task = Task(title=task_title, priority=priority, list=list, deadline=datetime.now() + timedelta(days=days))
+    #         task.save()
+    #         messages.success(request, "Add task '%s' with priority %s due in %s days " % (task_title, priority, days))
+    #         log.debug("task added %s", task.deadline)
+    #         form = TaskForm()
+    #
+    #     task_list = Task.objects.all().filter(list__owner=getUser(request))
+    #     task_list_done = task_list.filter(done=True)
+    #     task_list = task_list.filter(done=False)
+    #     list = None
+    #     # if "list" in kwargs:
+    #     #     task_list = task_list.filter(list__title=str(kwargs['list']))
+    #     #     list = kwargs['list']
+    #
+    #     task_list = sorted(task_list, key=lambda x: x.weight, reverse=True)
+    #     return render_to_response('list.html', {'task_list': task_list, 'task_list_done': task_list_done, 'form': form},
+    #                               context_instance=RequestContext(request))
 
-    # else:
-    #     messages.error(request, 'Priority or List missed')
+
 
 #TODO: strike done,
 #TODO: visibility 0
